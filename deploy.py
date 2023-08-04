@@ -4,12 +4,12 @@ from sklearn.preprocessing import StandardScaler
 import joblib as joblib
 import os
 
-model = joblib.load('saved_model1.pkl')
+model = joblib.load('saved_model.pkl')
 scaler = joblib.load('scaler.save')
 
 app = Flask(__name__)
 
-IMG_FOLDER = os.path.join('static', 'IMG')
+IMG_FOLDER = os.path.join('static', 'img')
 app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 
@@ -21,10 +21,10 @@ def index():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        sl = request.form['SepalLength']
-        sw = request.form['SepalWidth']
-        pl = request.form['PetalLength']
-        pw = request.form['PetalWidth']
+        sl = request.form['SepalLengthCm']
+        sw = request.form['SepalWidthCm']
+        pl = request.form['PetalLengthCm']
+        pw = request.form['PetalWidthCm']
         data = np.array([[sl, sw, pl, pw]], dtype=float)
         x = scaler.transform(data)
         prediction = model.predict(x)
